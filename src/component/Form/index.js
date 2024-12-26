@@ -4,27 +4,21 @@ import ComboBox from "../ComboBox";
 import Button from '../Button';
 import { useState } from 'react';
 
-const Form = () => {
-
-    const times = [
-        'Programação',
-        'Front-End',
-        'Backend',
-        'Data Science',
-        'DevOps',
-        'UX e Design',
-        'Mobile',
-        'Inovação e Gestão'
-    ]
-
+const Form = (props) => {
     const [nome, setNome] = useState('')
     const [cargo, setCargo] = useState('')
     const [imagem, setImagem] = useState('')
+    const [time, setTime] = useState('')
 
 
     const onSave = (e) => {
         e.preventDefault()
-        console.log("Form Submetido", {nome, cargo, imagem})
+        props.aoColaboradorCadastrado({
+            nome,
+            cargo,
+            imagem,
+            time
+        })
     }
 
     return (
@@ -50,7 +44,9 @@ const Form = () => {
                 />
                 <ComboBox
                     label="Time"
-                    itens={times}
+                    itens={props.teams}
+                    valor={time}
+                    aoAlterado={valor => setTime(valor)}
                 />
                 <Button>Criar Card</Button>
             </form>
